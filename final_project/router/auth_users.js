@@ -36,18 +36,16 @@ regd_users.post("/login", (req, res) => {
 
 // Add a book review
 // Task 9: Add or modify a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+regd_users.put("/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
   let review = req.query.review;
   let username = req.session.authorization['username'];
 
   if (books[isbn]) {
-    // This adds the review or updates it if the user already reviewed this book
     books[isbn].reviews[username] = review;
-    return res.status(200).send(`The review for the book with ISBN ${isbn} has been added/updated.`);
-  } else {
-    return res.status(404).json({ message: "Book not found" });
+    return res.status(200).send("The review for the book with ISBN " + isbn + " has been added/updated.");
   }
+  return res.status(404).json({ message: "Book not found" });
 });
 
 // Task 10: Delete a book review
